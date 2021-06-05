@@ -158,7 +158,9 @@
 								const { message, token, success, expired } =
 									res.data;
 								if (!success) throw new Error(message);
-								document.cookie = `token=${token}; expires=${expired}`;
+								document.cookie = `token=${token}; expires=${new Date(
+									expired
+								)}`;
 								window.location.href = "index2.html";
 							})
 							.catch(err => {
