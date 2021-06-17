@@ -24,18 +24,14 @@ const app = Vue.createApp({
 		};
 	},
 	methods: {
-		requestMethod(method) {
-			return { method, headers: { Authorization: this.token } };
-		},
 		async getData(page = 1) {
 			const url = `${apiUrl}/api/${apiPath}/admin/products?page=${page}`;
-
 			try {
 				const resData = await axios.get(url);
+				console.log(resData);
 				const { products, success, pagination, message } = resData.data;
 				if (!success) throw new Error(message);
 				this.productData = products;
-				console.log(this.productData);
 				this.pagination = pagination;
 			} catch (error) {
 				alert(error.message);
@@ -66,12 +62,13 @@ const app = Vue.createApp({
 			/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/,
 			"$1"
 		);
-		console.log(token);
 
-		if (!token) window.location = "index.html";
+		if (!token) {
+			alert("您尚未登入請重新登入.");
+			window.location = "index.html";
+		}
 
 		axios.defaults.headers.common["Authorization"] = token;
-
 		this.getData();
 	},
 });
@@ -84,6 +81,10 @@ app.component("modal", {
 	},
 	methods: {
 		addImg() {
+			this.productForm.imagesUrl = [];
+			this.productForm.imagesUrl.push("");
+		},
+		addCarouselImg() {
 			this.productForm.imagesUrl.push("");
 		},
 		removeCarouselImg() {
@@ -136,7 +137,6 @@ app.component("delModal", {
 				if (!success) throw new Error(message);
 				delProductModal.hide();
 				this.$emit("fetchData");
-				console.log(resData);
 			} catch (error) {
 				alert(error.message);
 			}

@@ -125,8 +125,9 @@
 			                <div class="row">
 			                    <div class="col-sm-4">
 			                        <div class="form-group">
-			                            <label for="">主要圖片</label>
+			                            <label for="mainImg">主要圖片</label>
 			                            <input
+			                                id="mainImg"
 			                                type="text"
 			                                class="form-control"
 			                                placeholder="請輸入圖片連結"
@@ -138,14 +139,15 @@
 			                            />
 			                        </div>
 			                        <div class="mb-1">多圖新增</div>
-			                        <template v-if="productForm.imagesUrl?.length">
+			                        <div v-if="productForm.imagesUrl?.length">
 			                            <div
 			                                class="mb-1"
 			                                v-for="(img, idx) in productForm.imagesUrl" :key="img"
 			                            >
 			                                <div class="form-group">
-			                                    <label for="">圖片網址</label>
+			                                    <label :for="img">圖片網址</label>
 			                                    <input
+			                                        :id="img"
 			                                        type="text"
 			                                        class="form-control"
 			                                        placeholder="請輸入圖片連結"
@@ -167,7 +169,7 @@
 			                                        w-100
 			                                    "
 
-			                                    @click.prevent="addImg"
+			                                    @click.prevent="addCarouselImg"
 			                                >
 			                                    新增圖片
 			                                </button>
@@ -187,7 +189,7 @@
 			                                    刪除圖片
 			                                </button>
 			                            </div>
-			                        </template>
+			                        </div>
 			                        <div v-else>
 			                            <button
 			                                class="
@@ -225,7 +227,7 @@
 			                                />
 			                            </div>
 			                            <div class="form-group col-md-6">
-			                                <label for="price">單位</label>
+			                                <label for="unit">單位</label>
 			                                <input
 			                                    id="unit"
 			                                    type="text"
